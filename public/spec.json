@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "/",
-      "description": "Attentive API Proxy"
+      "url": "",
+      "description": "https://api.attentivemobile.com/v1"
     }
   ],
   "security": [
