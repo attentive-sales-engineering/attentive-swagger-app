@@ -1,6 +1,6 @@
 # attentive-swagger
 
-This project renders the Attentive Open API Specs in Swagger UI.
+This project renders the Attentive Open API Specs in Swagger UI and runs on top of a Node proxy server.
 
 ## Requirements
 
@@ -11,13 +11,13 @@ This project renders the Attentive Open API Specs in Swagger UI.
 
 Click the link below to view the Swagger Doc.
 
-* [Attentive Open API](https://johnchaffee.github.io/attentive-swagger/api/)
+* [Attentive Open API](https://attentive-api-swagger.herokuapp.com/)
 
 ## Instructions
 
 - Open the Swagger UI Doc above
 - Click the Authorize button on the top right and enter your `API Key`
-- Click the method you want to run
+- Run some API requests
 
 ## Resources
 
