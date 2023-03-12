@@ -11,7 +11,7 @@ This project renders the Attentive Open API Specs in Swagger UI and runs on top 
 
 Click the link below to view the Swagger Doc.
 
-* [Attentive Open API](https://attentive-api-swagger.herokuapp.com/)
+* [View Attentive API - Swagger UI](https://attentive-api-swagger.herokuapp.com/)
 
 ## Instructions
 
@@ -21,5 +21,5 @@ Click the link below to view the Swagger Doc.
 
 ## Resources
 
-- [Attentive Docs](https://docs.attentivemobile.com/) - Attentive Developer Docs
-- [Attentive API](https://docs.attentivemobile.com/openapi/reference/overview/) - Attentive OpenAPI Spec
+- [Attentive Developer Docs](https://docs.attentivemobile.com/)
+- [Attentive Open API Spec ](https://docs.attentivemobile.com/openapi/reference/overview/)
