@@ -9,39 +9,17 @@ const PORT = process.env.PORT || 3000
 const app = express()
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(express.static('public')) // serve static files
+app.use(express.static('public')) // serve static Swaggger UI files from root directory
+app.use(cors()) // add CORS HTTP headers to allow browser API requests
 
-// Add CORS HTTP headers
-app.use(cors())
-
-// Function to log messages in console
-function logger (req) {
-  console.log('REQ.PROTOCOL:', req.protocol)
-  console.log('REQ.HOSTNAME:', req.hostname)
-  console.log('REQ.METHOD:', req.method)
-  console.log('REQ.URL:', req.url)
-  console.log('REQ.ORIGINALURL:', req.originalUrl)
-  console.log('REQ.PATH:', req.path)
-  console.log('REQ.PARAMS:', req.params)
-  console.log('REQ.QUERY:', req.query)
-  console.log('REQ.GET.AUTHORIZATION:', req.get('authorization'))
-  console.log('REQ.HEADERS:', req.headers)
-  console.log('REQ.HEADERS.AUTHORIZATION:', req.headers['authorization'])
-  console.log('CONTENT-TYPE:', req.get('content-type'))
-  console.log('REQ.BODY', req.body)
-}
-
-// ATTN-PROXY
-// Reroute all requests to https://api.attentivemobile.com/v1
-// Preserve anything in the path
+// Proxy Server reroutes all Swagger API requests to https://api.attentivemobile.com/v1
 app.use(/.*/, (req, res, next) => {
   console.log('APP.USE /.*/')
-  console.log('PROXY')
-  logger(req)
+  // logger(req)
 
   // Set URL and Auth
   const url = `https://api.attentivemobile.com/v1${req.originalUrl}`
-  console.log('URL:', url)
+  // console.log('URL:', url)
   const headers = {}
   headers['authorization'] = req.get('authorization')
   const method = req.method
@@ -51,18 +29,18 @@ app.use(/.*/, (req, res, next) => {
   const contentType = req.get('content-type')
   if (contentType) headers['content-type'] = contentType
   if (method === 'POST' || method === 'PUT') {
-    console.log('METHOD POST || PUT')
+    // console.log('METHOD POST || PUT')
     if (contentType && contentType === 'application/json') {
-      console.log('APPLICATION/JSON')
+      // console.log('APPLICATION/JSON')
       data = req.body
     }
   } else {
-    console.log('APPLICATION/X-WWW-FORM-URLENCODED')
+    // console.log('APPLICATION/X-WWW-FORM-URLENCODED')
     const qs = new URLSearchParams(req.params).toString()
-    console.log('QS:', qs)
+    // console.log('QS:', qs)
     data = qs
   }
-  console.log('DATA:', data)
+  // console.log('DATA:', data)
 
   axios({
     url,
@@ -91,6 +69,23 @@ app.use(/.*/, (req, res, next) => {
       console.log('FINALLY')
     })
 })
+
+// Function to inspect and log API requests in console for debugging
+function logger (req) {
+  console.log('REQ.PROTOCOL:', req.protocol)
+  console.log('REQ.HOSTNAME:', req.hostname)
+  console.log('REQ.METHOD:', req.method)
+  console.log('REQ.URL:', req.url)
+  console.log('REQ.ORIGINALURL:', req.originalUrl)
+  console.log('REQ.PATH:', req.path)
+  console.log('REQ.PARAMS:', req.params)
+  console.log('REQ.QUERY:', req.query)
+  console.log('REQ.GET.AUTHORIZATION:', req.get('authorization'))
+  console.log('REQ.HEADERS:', req.headers)
+  console.log('REQ.HEADERS.AUTHORIZATION:', req.headers['authorization'])
+  console.log('CONTENT-TYPE:', req.get('content-type'))
+  console.log('REQ.BODY', req.body)
+}
 
 // Start the Proxy Server
 app.listen(PORT, () => {

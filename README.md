@@ -1,25 +1,27 @@
 # attentive-swagger
 
-This project renders the Attentive Open API Specs in Swagger UI and runs on top of a Node proxy server.
+This project renders the Attentive Open API Spec in Swagger UI and runs on top of a Node proxy server.
+
+## Instructions
+
+- [View the Attentive OpenAPI Spec](https://attentive-api-swagger.herokuapp.com/)
+- Click the Authorize button on the top right and enter your Attentive `API Key`
+- Run some API requests
 
 ## Requirements
 
 - Attentive Account
 - Attentive API Key
 
-## Swagger Docs
-
-Click the link below to view the Swagger Doc.
-
-* [View Attentive API - Swagger UI](https://attentive-api-swagger.herokuapp.com/)
-
-## Instructions
-
-- Open the Swagger UI Doc above
-- Click the Authorize button on the top right and enter your `API Key`
-- Run some API requests
-
 ## Resources
 
 - [Attentive Developer Docs](https://docs.attentivemobile.com/)
-- [Attentive Open API Spec ](https://docs.attentivemobile.com/openapi/reference/overview/)
+- [Attentive Open API Spec](https://docs.attentivemobile.com/openapi/reference/overview/)
+
+## How it works
+
+If Swagger attempted to send the API requests directly from the browser to the Attentive API Server, the requests would be blocked due to CORS restritioncs. To solve this, Swagger sends the requests to a Node Express proxy server that reroutes messages to the Attentive API Server.
+
+- The Sagger UI static HTML/JS/CSS files and the Attentive OpenAPI Spec (`attentive.json`) are stored in the root `/public` folder. These files are rendered in the browser when visiting the root directory.
+- When a user interacts with the Swagger doc, the API requests are sent to the proxy server running at its root.
+- The proxy server reroutes the requests to the Attentive API server (`https://api.attentivemobile.com/v1/...`) and returns the responses to Swagger
