@@ -35,13 +35,18 @@
       "x-beta": false
     },
     {
+      "name": "Offers",
+      "description": "You can use the Offers API to add discount codes to an existing offer.",
+      "x-beta": true
+    },
+    {
       "name": "Custom Events",
-      "description": "Use the Custom Events API to send user actions to use in the Attentive Segment Builder and Journey Builder. This data cannot contain any sensitive or special categories of information as defined in applicable data protection and privacy laws, including the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA). See a list of specific categories of data you cannot share with Attentive [here](https://docs.attentivemobile.com/pages/legal-docs/pi-disclaimer/).",
+      "description": "Use the Custom Events API to send user actions to use in the Attentive Segment Builder and Journey Builder for both email and text messages. This data cannot contain any sensitive or special categories of information as defined in applicable data protection and privacy laws, including the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA). See a list of specific categories of data you cannot share with Attentive [here](https://docs.attentivemobile.com/pages/legal-docs/pi-disclaimer/).",
       "x-beta": false
     },
     {
       "name": "Custom Attributes",
-      "description": "Use the Custom Attributes API to apply customizable data or characteristics to each of your subscribers. You can then build segments based on that information to send targeted campaigns and journeys.",
+      "description": "Use the Custom Attributes API to apply customizable data or characteristics to each of your subscribers. You can then build segments based on that information to send targeted campaigns and journeys. This data cannot contain any sensitive or special categories of information as defined in applicable data protection and privacy laws, including the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA). See a list of specific categories of data you cannot share with Attentive [here](https://docs.attentivemobile.com/pages/legal-docs/pi-disclaimer/).",
       "x-beta": false
     },
     {
@@ -61,7 +66,7 @@
     },
     {
       "name": "Identity",
-      "description": "Use the Identity API to manage user identifiers. With this API, you can programmatically add a client user identifier or custom identifier(s) to a user.\n",
+      "description": "Use the Identity API to manage user identifiers. With this API, you can programmatically add a client user identifier or custom identifier(s) to a user.\nYou should only use clientUserId and customIdentifiers to send Attentive your system-assigned unique identifiers (even when testing).\n\nNotes:\n  - Sending duplicate values could lead to unintentionally bridging users together.\n  - Don't use customIdentifiers to send attributes (e.g., first name, last name). To send those types of attributes,\n    use our [Custom Attributes API](https://docs.attentivemobile.com/openapi/reference/tag/Custom-Attributes/).\n  - Avoid sending null values or empty strings. If you don't have a valid identifier, you should omit the field\n    from the payload.\n",
       "x-beta": true
     }
   ],
@@ -100,6 +105,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -111,6 +119,13 @@
       "get": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "webhooks:write"
+            ]
+          }
+        ],
         "summary": "List webhooks",
         "description": "Make an API call to this endpoint to list existing webhooks.",
         "operationId": "getWebhooks",
@@ -148,6 +163,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "webhooks:write"
+            ]
+          }
+        ],
         "summary": "Create webhook",
         "description": "Make an API call to this endpoint to subscribe to a webhook.\n\nEvents are a collection of strings of the following types:\n* `sms.subscribed`\n* `sms.sent`\n* `sms.message_link_click`\n* `email.subscribed`\n* `email.unsubscribed`\n* `email.message_link_click`\n* `email.opened`\n* `custom_attribute.set`\n\nEvent types are case sensitive.\n\nAll events included will be sent to the URL.\n",
         "operationId": "createWebhook",
@@ -197,6 +219,13 @@
       "delete": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "webhooks:write"
+            ]
+          }
+        ],
         "summary": "Delete webhook",
         "description": "Make an API call to this endpoint to remove a webhook.",
         "operationId": "deleteWebhook",
@@ -238,6 +267,13 @@
       "put": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "webhooks:write"
+            ]
+          }
+        ],
         "summary": "Update webhook",
         "description": "Make an API call to this endpoint to update a webhook",
         "operationId": "updateWebhook",
@@ -361,6 +397,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "ecommerce:write"
+            ]
+          }
+        ],
         "summary": "Product view",
         "description": "Make a call to this endpoint when a user views a product.",
         "operationId": "postProductViewEvents",
@@ -393,6 +436,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -404,6 +450,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "ecommerce:write"
+            ]
+          }
+        ],
         "summary": "Add to cart",
         "description": "Make a call to this endpoint when a user adds a product to their shopping cart.",
         "operationId": "postAddToCartEvents",
@@ -436,6 +489,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -447,6 +503,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "ecommerce:write"
+            ]
+          }
+        ],
         "summary": "Purchase",
         "description": "Make a call to this endpoint when a user generates an order or purchase.",
         "operationId": "postPurchaseEvents",
@@ -479,8 +542,68 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
+    "/coupons/coupon-pool/{coupon-pool-id}/create": {
+      "post": {
+        "tags": [
+          "Offers"
+        ],
+        "summary": "Add discount codes",
+        "description": "Note: Once the offer(s) has been created, please reach out to an Attentive team member to enable this API feature for you\n\n\nMake a call to this asynchronous endpoint to create new discount codes in an existing offer.",
+        "operationId": "createCoupons",
+        "x-external": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "offers:write"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "coupon-pool-id",
+            "description": "The ID created under \"Create an Offer\"",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCouponsDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted. Check the Attentive [Offers](https://ui.attentivemobile.com/offers) page to make sure that there are no errors and the remaining code count is accurate."
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidParameter1"
+          },
+          "403": {
+            "$ref": "#/components/responses/AccessDenied1"
+          },
+          "404": {
+            "$ref": "#/components/responses/DetailedBadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError1"
           }
         }
       }
@@ -491,6 +614,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "events:write"
+            ]
+          }
+        ],
         "summary": "Custom Events",
         "description": "Make a call to this endpoint for any event-based data representing user actions.",
         "operationId": "postCustomEvents",
@@ -523,6 +653,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -535,8 +668,15 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "attributes:write"
+            ]
+          }
+        ],
         "summary": "Custom Attributes",
-        "description": "Make a call to this endpoint for any attribute-based data.  There are no limits to the amount of custom attributes that can be created. Note that you can create net-new properties with this API, however, it cannot be used to create new values for an existing UI-created property name. If a property name is created through the Attentive platform, all possible property values must also be defined in the platform.",
+        "description": "Make a call to this endpoint for any attribute-based data. There are no limits to the amount of custom attributes that can be created. Note that you can create net-new properties with this API, however, it cannot be used to create new values for an existing UI-created property name. If a property name is created through the Attentive platform, all possible property values must also be defined in the platform. For example, if a property has possible values of \"Adult, Teen, Children's\", those are the only values that will be accepted through the API. This does not apply for properties with the type \"Custom input\", for example: Full Name.\n",
         "operationId": "postCustomAttributes",
         "tags": [
           "Custom Attributes"
@@ -567,6 +707,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -577,6 +720,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "subscriptions:write"
+            ]
+          }
+        ],
         "summary": "Subscribe user",
         "description": "Make a call to this endpoint to opt-in a user to a subscription. \n\nNotes:\n- A legal disclosure is required when a user is opted-in programmatically.\n\n    - For marketing messages, required [legal language](https://docs.attentivemobile.com/pages/legal-docs/legal-disclosure-language/) must be included.\n\n    - For transactional messages, you must include a [transactional opt-in unit](https://docs.attentivemobile.com/pages/legal-docs/legal-transactional/).\n\n- By default, if a subscription already exists, it will try and record the attempt to create the subscription again. For TEXT subscriptions, this will result in a message being sent to the person indicating that they are already subscribed.\n",
         "operationId": "addSubscriptions",
@@ -616,6 +766,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -624,6 +777,13 @@
       "get": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "subscriptions:write"
+            ]
+          }
+        ],
         "summary": "Get subscription eligibility for a user",
         "description": "Make a call to this endpoint to list all subscription types and channels a user is subscribed to. You can query for a subscriber using either their phone number or email. One of the query parameters is required in order to look up a subscriber. As an example, you can use this endpoint to check if a subscriber is eligible to receive SMS or email campaigns, and then send them a message based on that eligibility.\n",
         "operationId": "getSubscriptions",
@@ -673,6 +833,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -683,6 +846,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "subscriptions:write"
+            ]
+          }
+        ],
         "summary": "Unsubscribe subscriptions for a user",
         "description": "Make a call to this endpoint to unsubscribe a user from a subscription type or channel. If no subscriptions\nare present in the request, the user is unsubscribed from all subscriptions. If subscriptions are present\nin the request, the user is unsubscribed from the requested type or channel combination. By default, if a\nsubscription exists, but the user is already unsubscribed, it records the attempt to unsubscribe the\nsubscription again. For TEXT subscriptions, a message is sent to the person indicating that they are\nunsubscribed.\n\nFor the user object, the email data point determines which email subscriptions a user has and the phone data point \ndetermines which text (or sms) subscriptions a user has. Passing in an email does not locate, nor unsubscribe, \na user from any sms subscriptions. Similarly, passing in a phone does not locate, nor unsubscribe, a user from any email subscriptions.\n",
         "operationId": "unsubscribeSubscriptions",
@@ -722,6 +892,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -734,6 +907,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "product_catalogs:write"
+            ]
+          }
+        ],
         "summary": "Upload Product Catalog",
         "description": "Make a call to this endpoint to start sending Attentive your full or partial product catalog.\nThe process starts with a POST to this endpoint, where you will receive a pre-signed AWS S3 URL. You can\nuse any language's http request libraries for uploading a file via HTTP. Here's how to do it with `curl` as an example\n\n\n```\ncurl --upload-file ${fileNameLocally} ${presignedURL}\n```\n\n\nand here's an example in Python\n```python\nimport requests\nwith open(filepath, 'rb') as f:\n    r = requests.put(upload_url, data=f)\n```\n\n[Here are examples from AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.html) on how to send the file over in popular programming languages. Note that you aren't interested in\nthe portion of these examples where they are generating the pre-signed URL, but simply the http call to upload the file to the URL.\n\nOnce your full or partial product catalog begins to upload, the status is updated to\n`validating` while it's processing and the file is checked for errors. After the upload is\nvalidated, the status is updated to `validated` or skips directly to `completed`. When the\ncatalog is saved, the status is updated to `SAVED`. In cases where there are errors saving\nthe data, Attentive Engineering is notified and will contact you.\n\n\nTo ensure there are no validation errors in the file, you can set `validateOnly` parameter\nto `true` to avoid saving any data. We highly recommend this during your development to get a\nfaster feedback loop on any validation errors as you generate files.\n\n\nIf there are no errors returned in the upload response, your product catalog uploaded\nsuccessfully.\n",
         "operationId": "postUpload",
@@ -773,6 +953,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -780,11 +963,18 @@
       },
       "get": {
         "x-external": true,
+        "security": [
+          {
+            "OAuthFlow": [
+              "product_catalogs:read"
+            ]
+          }
+        ],
         "tags": [
           "Product Catalog"
         ],
         "summary": "View Recent Catalog Uploads",
-        "description": "Make a call to this endpoint to list recent catalog uploads with their statuses to gain visibility into the ingestion workflow in order of creation. See the POST of this endpoint for details.\n",
+        "description": "Make a call to this endpoint to list recent catalog uploads with their statuses to gain visibility into the ingestion workflow in order of creation. See the POST of this endpoint for details.\n`Expires` indicates how long you can wait before uploading the product catalog file. If the catalog upload expires, then we will no longer process the file that you upload and you will need to initiate  a new catalog upload.\n",
         "operationId": "getUploads",
         "responses": {
           "200": {
@@ -812,6 +1002,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -822,6 +1015,13 @@
       "x-external": true,
       "description": "Making a GET request with the uploadID from your original catalog upload POST will give you the updated information on how the upload is progressing. You can also use the list endpoint as well to retrieve the same data. Please see the POST of `/product-catalog/uploads` for more detail.\n",
       "get": {
+        "security": [
+          {
+            "OAuthFlow": [
+              "product_catalogs:read"
+            ]
+          }
+        ],
         "summary": "Lookup Product Catalog Ingestion",
         "tags": [
           "Product Catalog"
@@ -861,6 +1061,9 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -871,7 +1074,14 @@
       "post": {
         "x-external": true,
         "x-emits-event": true,
-        "summary": "Add a delete request",
+        "summary": "Sending a request to this endpoint will delete a subscriber in accordance with CCPA regulations within thirty days provided the call was successful.",
+        "security": [
+          {
+            "OAuthFlow": [
+              "privacy_requests:write"
+            ]
+          }
+        ],
         "tags": [
           "Privacy Request"
         ],
@@ -881,14 +1091,14 @@
         },
         "responses": {
           "200": {
-            "description": "Delete request added succesfully",
+            "description": "Delete request added successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PrivacyRequestDto"
                 },
                 "example": {
-                  "id": 1,
+                  "id": "123abc",
                   "processed": false,
                   "type": "DELETE",
                   "subjectPhone": "+5555555555",
@@ -920,6 +1130,76 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalError"
+          }
+        }
+      }
+    },
+    "/privacy/delete-request/{id}": {
+      "get": {
+        "x-external": true,
+        "x-emits-event": true,
+        "summary": "Get a CCPA delete request by Id",
+        "security": [
+          {
+            "OAuthFlow": [
+              "privacy_requests:read"
+            ]
+          }
+        ],
+        "tags": [
+          "Privacy Request"
+        ],
+        "operationId": "getDeleteRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Alphanumeric ID of the request to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete request fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrivacyRequestDto"
+                },
+                "example": {
+                  "id": "123abc",
+                  "processed": true,
+                  "type": "DELETE",
+                  "subjectPhone": "+*****5555",
+                  "subjectEmail": "a**@website.com",
+                  "requestMsg": "The subscriber requested to be removed",
+                  "requestDateTime": "2020-09-02T17:44:23.875+0000",
+                  "processingStartDateTime": "2020-09-02T17:45:23.875+0000",
+                  "processingEndDateTime": "2020-09-02T17:46:23.875+0000"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/AccessDenied"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
           "500": {
             "$ref": "#/components/responses/InternalError"
           }
@@ -930,6 +1210,13 @@
       "post": {
         "x-external": true,
         "x-emits-event": false,
+        "security": [
+          {
+            "OAuthFlow": [
+              "identity:write"
+            ]
+          }
+        ],
         "summary": "Add a client user identifier or custom identifier(s) to a user",
         "description": "Make a call to this endpoint to associate a client user identifier or custom identifier(s) with other identifiers. A client user or custom identifier needs to be accompanied by at least one other identifier of the following types: phone, email, shopify id, klaviyo id, client user identifier, or custom identifier.\n",
         "operationId": "identify",
@@ -952,6 +1239,9 @@
           },
           "400": {
             "$ref": "#/components/responses/InvalidParameter"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         }
       }
@@ -959,10 +1249,20 @@
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "description": "Private applications can authenticate through basic HTTP authentication by using their API key as the [Bearer Token](https://oauth.net/2/bearer-tokens/) when making calls to Attentive’s APIs. To generate a unique API key, you must [create an app in the Attentive platform](https://ui.attentivemobile.com/integrations/custom-app/management). Use the `GET /me` endpoint to verify that you are authenticating correctly.",
+      "OAuthFlow": {
+        "type": "oauth2",
+        "description": "This API uses OAuth 2 with the authorization code grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://ui-devel.attentivemobile.com/integrations/oauth-install?client_id={clientId}&redirect_uri={redirectUri}&scope={scope}",
+            "tokenUrl": "https://api.attentivemobile.com/v1/authorization-codes/tokens",
+            "scopes": {
+              "subscriptions:write": "write subscription events",
+              "events:write": "write custom events",
+              "ecommerce:write": "write ecommerce events"
+            }
+          }
+        }
       }
     },
     "schemas": {
@@ -2618,6 +2918,77 @@
           }
         }
       },
+      "UpdateContactCardRequest": {
+        "type": "object",
+        "description": "contact card info",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "mediaUrl": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "companyId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "companyUrl": {
+            "type": "string"
+          },
+          "secondaryUrl": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "companyLegalName": {
+            "type": "string"
+          },
+          "useAddressFromSettingsUI": {
+            "type": "boolean"
+          },
+          "addressLine1": {
+            "type": "string"
+          },
+          "addressLine2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "addressCountry": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "phones": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "TestTokenRequestDto": {
         "type": "object",
         "properties": {
@@ -3330,6 +3701,256 @@
           },
           "timezone": {
             "type": "string"
+          }
+        }
+      },
+      "ScimUserDto": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "userName": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/NameDto"
+          },
+          "emails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailDto"
+            }
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "userType": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaDto"
+          }
+        }
+      },
+      "NameDto": {
+        "type": "object",
+        "properties": {
+          "givenName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "familyName": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailDto": {
+        "type": "object",
+        "properties": {
+          "primary": {
+            "type": "boolean"
+          },
+          "value": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "display": {
+            "type": "string"
+          }
+        }
+      },
+      "ScimGroupDto": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberDto"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaDto"
+          }
+        }
+      },
+      "MemberDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "id field of the account member of the group"
+          },
+          "display": {
+            "type": "string",
+            "description": "display name (email) of the account member of the group"
+          }
+        }
+      },
+      "MetaDto": {
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "lastModified": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      },
+      "PatchOpDto": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "Operations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OperationDto"
+            }
+          }
+        }
+      },
+      "OperationDto": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "description": "(Optional) path to the field being replaced (e.g. member of id 123 on the list of members)\n"
+          },
+          "value": {
+            "type": "object",
+            "description": "Key-value dictionary with field names and their new values\n"
+          }
+        }
+      },
+      "ScimUsersResponseDto": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "totalResults": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "startIndex": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemsPerPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScimUserDto"
+            }
+          }
+        }
+      },
+      "ScimUserResponseDto": {
+        "type": "object",
+        "$ref": "#/components/schemas/ScimUserDto"
+      },
+      "ScimGroupsResponseDto": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "totalResults": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "startIndex": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemsPerPage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScimGroupDto"
+            }
+          }
+        }
+      },
+      "ScimErrorResponse": {
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "detail": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -4106,79 +4727,10 @@
           }
         }
       },
-      "CouponUploadListDto": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/CouponUploadDto"
-        }
-      },
       "CouponPoolListDto": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/CouponPoolDto"
-        }
-      },
-      "CouponUploadDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "coupon_pool_id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "filename": {
-            "type": "string",
-            "description": "filename that was uploaded",
-            "example": "coupons.csv"
-          },
-          "status": {
-            "type": "string",
-            "description": "State of coupon_upload.",
-            "enum": [
-              "ACTIVE",
-              "PENDING",
-              "ERROR",
-              "SYNCING"
-            ],
-            "example": "SYNCING"
-          },
-          "count_uploaded": {
-            "type": "integer"
-          },
-          "count_created": {
-            "type": "integer"
-          },
-          "count_duplicate": {
-            "type": "integer"
-          },
-          "results": {
-            "type": "string",
-            "description": "Helpful text on error/completion",
-            "example": "Unable to parse line 10."
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2020-01-12T00:00:00.000Z"
-          },
-          "updated": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2020-01-12T00:00:00.000Z"
-          },
-          "distributionStart": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2021-01-01T00:00:00.000Z"
-          },
-          "distributionStop": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2021-01-01T00:00:00.000Z"
-          }
         }
       },
       "CouponPoolDto": {
@@ -4290,74 +4842,6 @@
           "STATIC"
         ]
       },
-      "CouponPoolRequestDto": {
-        "type": "object",
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Id of pool",
-            "example": 1234
-          },
-          "name": {
-            "type": "string",
-            "description": "Descriptive name for this pool",
-            "example": "25% off for Black Friday",
-            "minLength": 5
-          },
-          "description": {
-            "type": "string",
-            "description": "Ad-hoc notes for this pool"
-          },
-          "status": {
-            "$ref": "#/components/schemas/CouponPoolStatus",
-            "description": "State of coupon pool itself",
-            "example": "ACTIVE"
-          },
-          "type": {
-            "$ref": "#/components/schemas/CouponPoolType",
-            "description": "Type of Coupon Pool. Dynamic/Static",
-            "default": "DYNAMIC",
-            "example": "DYNAMIC"
-          },
-          "auto_refresh": {
-            "type": "boolean",
-            "default": false,
-            "description": "If coupon pool should be auto-replenished.",
-            "example": false
-          },
-          "coupon_url_template": {
-            "type": "string",
-            "description": "Optional URL that will be filled in with a coupon as appropriate",
-            "example": "https://myshopify.com/coupon/{coupon}"
-          },
-          "code_template": {
-            "type": "string",
-            "example": "SUMMER-{RAND}-2"
-          },
-          "external_id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "ID specific to integration",
-            "example": 123456789
-          },
-          "static_code": {
-            "type": "string",
-            "description": "A static code for a static coupon pool. Required if type is STATIC",
-            "maxLength": 64
-          },
-          "associated_entities": {
-            "type": "array",
-            "description": "List of associated entities",
-            "items": {
-              "$ref": "#/components/schemas/CouponSetAssociationDto"
-            }
-          }
-        }
-      },
       "CouponSetAssociationDto": {
         "type": "object",
         "required": [
@@ -4397,6 +4881,38 @@
           },
           "validRanges": {
             "type": "string"
+          }
+        }
+      },
+      "CreateCouponsDto": {
+        "type": "object",
+        "required": [
+          "codes"
+        ],
+        "properties": {
+          "codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of the discount code values. Number of discount codes must be between 0 and 200,000.",
+            "example": [
+              "code1",
+              "code2",
+              "code3",
+              "code4",
+              "code5"
+            ]
+          },
+          "distributionStart": {
+            "type": "string",
+            "description": "Timestamp at which point the discount codes become valid for distribution within Attentive messages. Must be in valid UTC ISO format e.g. 2023-03-04T21:29:25Z. If null, the discount codes never expire.",
+            "example": "2023-02-14T21:29:25Z"
+          },
+          "distributionStop": {
+            "type": "string",
+            "description": "Timestamp at which point the discount codes become invalid for distribution within Attentive messages. Must be in valid UTC ISO format.",
+            "example": "2023-02-15T21:29:25Z"
           }
         }
       },
@@ -4921,16 +5437,24 @@
         "properties": {
           "type": {
             "type": "string",
-            "description": "The type of event. This name is case sensitive. \"Order shipped\" and \"Order Shipped\" would be considered different event types.\n",
+            "description": "The type of event. This name is case sensitive.\n\"Order shipped\" and \"Order Shipped\" would be considered different event types.\n\nThe Custom Event type cannot any of the following special characters:\n* double quote \"\n* single quote '\n* parentheses ( )\n* curly braces { }\n* square brackets [ ]\n* backslash \\\n* vertical bar |\n* commas ,\n",
             "example": "Order Shipped"
           },
           "properties": {
             "type": "object",
-            "description": "Any metadata associated with the event.\n\nObject keys are expected to be strings, and cannot contain any of the following special characters:\n* double quote \"\n* curly braces { }\n* square brackets [ ]\n* backslash \\\n* vertical bar |\n\nObject values can be any type. Note that both object keys and object values are case sensitive. For example, \"deliverydate\" and\n\"DeliveryDate\" would be considered different event properties.\n\nFor URLs that are provided as a value, Attentive will automatically shorten the link with your brand's link shortener.\nFor example, https://mysite.com/. Note that Attentive can only shorten URLs that are 1,024 characters or fewer.\n",
+            "description": "Any metadata associated with the event.\n\nObject keys are expected to be strings, and cannot contain any of the following special characters:\n* double quote \"\n* curly braces { }\n* square brackets [ ]\n* backslash \\\n* vertical bar |\n\nObject values can be any type. Note that both object keys and object values are case sensitive. For example, \"deliverydate\" and\n\"DeliveryDate\" would be considered different event properties.\n\nNotes:\n* When you’re creating journeys that use custom events data, you can only use lists and nested objects can only be used with email messages. Lists and nested objects are not currently supported for SMS.\n* For URLs that are provided as a value, Attentive will automatically shorten the link with your brand's link shortener. For example, https://mysite.com/. Note that Attentive can only shorten URLs that are 1,024 characters or fewer.\n",
             "example": {
               "orderStatusURL": "example.com/orderstatus/54321",
               "delivery_date": "May 10",
-              "Order Id": "54321"
+              "Order Id": "54321",
+              "products": [
+                "productId1",
+                "productId2"
+              ],
+              "shipment": {
+                "carrier": "fedex",
+                "trackingNumber": "12345"
+              }
             }
           },
           "externalEventId": {
@@ -4958,10 +5482,14 @@
         "properties": {
           "properties": {
             "type": "object",
-            "description": "Any metadata associated with the attribute. Object keys are expected to be strings. Object values can be any type. Both object keys and object values are case sensitive. \"Favorite color\" and \"Favorite Color\" would be considered different custom attributes.\n",
+            "description": "Any metadata associated with the attribute. Object keys are expected to be strings. Object values can be any type. The key will be assigned a type corresponding to the type seen of the first value. For example, if 'Age' is passed with the first value of '24', 'Age' will be typed as a 'Number'. There is no need to pass strings in double quotes. Both object keys and object values are case sensitive. \"Favorite color\" and \"Favorite Color\" would be considered different custom attributes.\n",
             "example": {
-              "favorite color": "blue",
-              "Favorite team": "Packers"
+              "age": "24",
+              "birthday": "1986-11-16",
+              "sign up": "2021-04-23T16:04:33Z",
+              "favorite team": "Minnesota Vikings",
+              "Gift card balance": "50.89",
+              "VIP": "TRUE"
             }
           },
           "user": {
@@ -5291,6 +5819,7 @@
               "SEND_LEGAL_WELCOME",
               "SEND_MESSAGE",
               "SEND_CONVERSATIONAL_MESSAGE",
+              "SEND_PAYMENT_MESSAGE",
               "TRIGGER",
               "TWO_WAY_MESSAGE",
               "VARIANT"
@@ -5335,6 +5864,7 @@
                     "SEND_LEGAL_WELCOME",
                     "SEND_MESSAGE",
                     "SEND_CONVERSATIONAL_MESSAGE",
+                    "SEND_PAYMENT_MESSAGE",
                     "TRIGGER",
                     "TWO_WAY_MESSAGE",
                     "VARIANT"
@@ -5380,46 +5910,6 @@
             ]
           }
         }
-      },
-      "AttachmentBodyPropertiesDto": {
-        "type": "object",
-        "properties": {
-          "eventLookupProperties": {
-            "$ref": "#/components/schemas/EventLookupPropertiesDto"
-          },
-          "recommendationProperties": {
-            "$ref": "#/components/schemas/RecommendationAttachmentPropertiesDto"
-          }
-        }
-      },
-      "AttachmentDto": {
-        "type": "object",
-        "properties": {
-          "attachmentContextRequest": {
-            "$ref": "#/components/schemas/AttachmentBodyPropertiesDto"
-          },
-          "attachmentId": {
-            "type": "string"
-          },
-          "attachmentType": {
-            "type": "string",
-            "enum": [
-              "ATTACHMENT_TYPE_UNKNOWN",
-              "ATTACHMENT_TYPE_SHORT_LINK",
-              "ATTACHMENT_TYPE_VIDEO_LINK",
-              "ATTACHMENT_TYPE_CONTACT_CARD",
-              "ATTACHMENT_TYPE_OFFER",
-              "ATTACHMENT_TYPE_EVENT_LOOKUP",
-              "ATTACHMENT_TYPE_USER_PROPERTY",
-              "ATTACHMENT_TYPE_RECOMMENDATION",
-              "UNRECOGNIZED"
-            ]
-          }
-        },
-        "required": [
-          "attachmentContextRequest",
-          "attachmentType"
-        ]
       },
       "AutoResponseJourneyDetailsDto": {
         "type": "object",
@@ -5784,6 +6274,7 @@
               "SEND_LEGAL_WELCOME",
               "SEND_MESSAGE",
               "SEND_CONVERSATIONAL_MESSAGE",
+              "SEND_PAYMENT_MESSAGE",
               "TRIGGER",
               "TWO_WAY_MESSAGE",
               "VARIANT"
@@ -5813,6 +6304,11 @@
           },
           "text": {
             "type": "string"
+          },
+          "graphqlMessageId": {
+            "type": "string",
+            "description": "GraphQL ID of the compose message",
+            "example": "MTQ6Sm91cm5leVRyaWdnZXIyMzg"
           }
         }
       },
@@ -5885,7 +6381,8 @@
           }
         },
         "required": [
-          "category"
+          "category",
+          "trigger"
         ]
       },
       "CreateNewJourneyRequest": {
@@ -6231,170 +6728,6 @@
           }
         ]
       },
-      "EventLookupPropertiesDto": {
-        "type": "object",
-        "properties": {
-          "entityToken": {
-            "type": "string"
-          },
-          "eventLookupType": {
-            "type": "string",
-            "enum": [
-              "EVENT_LOOKUP_TYPE_UNKNOWN",
-              "EVENT_LOOKUP_TYPE_BY_UUID",
-              "EVENT_LOOKUP_TYPE_DYNAMIC_FILTERS",
-              "UNRECOGNIZED"
-            ]
-          },
-          "eventType": {
-            "type": "string",
-            "enum": [
-              "PROBE",
-              "ALERT",
-              "PAGE_VIEW",
-              "PRODUCT_VIEW",
-              "ADD_TO_CART",
-              "REMOVE_FROM_CART",
-              "CHECKOUT",
-              "PURCHASE",
-              "ORDER",
-              "ORDER_SUBSCRIPTION_CREATED",
-              "ORDER_SUBSCRIPTION_SKIPPED",
-              "ORDER_SUBSCRIPTION_CHARGE_SCHEDULED",
-              "ORDER_SUBSCRIPTION_CHARGE_FAILED",
-              "ORDER_SUBSCRIPTION_ONE_TIME_PRODUCT_ADD_SUCCEEDED",
-              "ORDER_SUBSCRIPTION_ONE_TIME_PRODUCT_ADD_FAILED",
-              "ORDER_CONFIRMED",
-              "FULFILLMENT_CREATED",
-              "FULFILLMENT_OUT_FOR_DELIVERY",
-              "FULFILLMENT_DELIVERED",
-              "ORDER_CANCELLED",
-              "FULFILLMENT_CANCELLED",
-              "REFUND_FAILED",
-              "REFUND_SUCCEEDED",
-              "CHECKOUT_ABANDONED",
-              "CHECKOUT_STARTED",
-              "FULFILLMENT_IN_TRANSIT",
-              "FULFILLMENT_AVAILABLE_FOR_PICKUP",
-              "FULFILLMENT_DELIVERY_ATTEMPT_FAILURE",
-              "FULFILLMENT_DELIVERY_EXCEPTION",
-              "FULFILLMENT_PENDING",
-              "USER_IDENTIFIER_COLLECTED",
-              "IMPRESSION",
-              "CLICK",
-              "JOIN",
-              "MESSAGE_RECEIPT",
-              "MESSAGE_LINK_CLICK",
-              "OPT_OUT",
-              "MESSAGE_FATIGUE",
-              "RESUBSCRIBE",
-              "COMPANY_LINK_CLICK",
-              "EMAIL_SAVE",
-              "COUPON_SCREEN_LOAD",
-              "REPLENISHMENT",
-              "SUBSCRIBER_DOUBLE_OPT_IN_STARTED",
-              "CREATIVE_INTERACTION",
-              "INVENTORY_LISTING",
-              "SUBSCRIBER_FATIGUED",
-              "EMAIL_MESSAGE_SENT",
-              "EMAIL_MESSAGE_OPENED",
-              "SUBSCRIPTION_OPTED_OUT",
-              "OPT_OUT_SUBSCRIPTION",
-              "TEXT_MESSAGE_RECEIVED",
-              "SUBSCRIPTION_OPT_IN_STARTED",
-              "SUBSCRIPTION_OPT_IN_COMPLETED",
-              "SUBSCRIPTION_OPT_IN_DECLINED",
-              "SUBSCRIPTION_ALREADY_SUBSCRIBED",
-              "SUBSCRIPTION_DEACTIVATED",
-              "SUBSCRIPTION_DEACTIVATED_SKIPPED",
-              "EMAIL_SPAM_REPORTED",
-              "SUBSCRIPTION_CONTACT_INFO_REASSIGNED",
-              "SUBSCRIPTION_POINT_IN_TIME_METRIC",
-              "SUBSCRIBER_TAG",
-              "MESSAGE_LINK_PREFETCH",
-              "SUBSCRIBER_LIST",
-              "SUBSCRIBER_PURCHASE_KEYWORD_RECEIVED",
-              "SURVEY_KEYWORD_RECEIVED",
-              "SUBSCRIPTION_SUPPRESSED",
-              "CAMPAIGN_CANCELLED",
-              "CAMPAIGN_CREATED",
-              "CAMPAIGN_DELETED",
-              "CAMPAIGN_PAUSED",
-              "CAMPAIGN_RESUMED",
-              "CAMPAIGN_UPDATED",
-              "CAMPAIGN_SEND_STARTED",
-              "CAMPAIGN_SEND_FINISHED",
-              "CAMPAIGN_TIMEZONE_SEND_STARTED",
-              "CAMPAIGN_TIMEZONE_SEND_FINISHED",
-              "CAMPAIGN_RESCHEDULED",
-              "CAMPAIGN_SUBSCRIBER_QUALIFICATION_EVALUATED",
-              "CAMPAIGN_SMS_RATE_LIMIT_UPDATED",
-              "CAMPAIGN_MMS_RATE_LIMIT_UPDATED",
-              "CAMPAIGN_DOWNGRADED",
-              "CAMPAIGN_DRAFTED",
-              "CAMPAIGN_RATE_LIMIT_UPDATED",
-              "USER_PROPERTY_SET",
-              "CUSTOM_EVENT",
-              "SEGMENT_JOINED",
-              "USER_PROPERTY_BATCH",
-              "PAYMENTS_CALL_TO_ACTION_SENT",
-              "PAYMENTS_BUY_RESPONSE_RECEIVED",
-              "PAYMENTS_CARD_VAULTED",
-              "PAYMENTS_SESSION_FAILED",
-              "PAYMENTS_PURCHASE_COMPLETED",
-              "PAYMENTS_ORDER_CANCEL_REQUESTED",
-              "PAYMENTS_ORDER_CANCELLED",
-              "PAYMENTS_PURCHASE_REFUNDED",
-              "PAYMENTS_SESSION_STARTED",
-              "SEND_METADATA_CREATED",
-              "SEND_METADATA_UPDATED",
-              "SEND_STATUS_UPDATED",
-              "MESSAGE_EXPLORER_CREATED",
-              "MESSAGE_EXPLORER_UPDATED",
-              "MESSAGE_EXPLORER_CONTENT_CREATED",
-              "DRUID_MESSAGE_EXPLORER_DATA",
-              "MESSAGE_METADATA_FINALIZED",
-              "MESSAGE_STATUS_DETAILS",
-              "MESSAGE_METADATA_CONTENT",
-              "CUSTOMER_SERVICE_TICKET_OPENED",
-              "CUSTOMER_SERVICE_TICKET_CLOSED",
-              "EVENT_CONSUMED",
-              "PRODUCT_INVENTORY_CHANGE",
-              "VARIANT_INVENTORY_CHANGE",
-              "VARIANT_PRICE_CHANGE",
-              "COUPON_ASSIGNED",
-              "CONVERSION",
-              "CHECKOUT_UPDATED",
-              "CONVERSION_FOR_MESSAGE",
-              "CART_UPDATED",
-              "LAST_CLICK_CONVERSION",
-              "PUBLIC_API_REQUEST",
-              "LOYALTY_OPTED_IN",
-              "LOYALTY_OPTED_OUT",
-              "LOYALTY_POINTS_CHANGED",
-              "LOYALTY_REWARD_REDEEMED",
-              "LOYALTY_REWARD_REDEMPTION_REMINDER_ISSUED",
-              "LOYALTY_TIER_CHANGED",
-              "LOYALTY_TIER_PROGRESS_UPDATED",
-              "LOYALTY_REFERRAL_COMPLETED",
-              "LOYALTY_USER_SPECIAL_DAY_REACHED",
-              "LOYALTY_POINT_BALANCE_REMINDER_ISSUED",
-              "TRACE_EVENT",
-              "EDS_TELEMETRY_TRACER",
-              "EMAIL_STATUS_UPDATED",
-              "UNRECOGNIZED"
-            ]
-          },
-          "timeCondition": {
-            "$ref": "#/components/schemas/TimeConditionDto"
-          }
-        },
-        "required": [
-          "entityToken",
-          "eventLookupType",
-          "eventType"
-        ]
-      },
       "ExperimentNodeParametersDto": {
         "type": "object",
         "allOf": [
@@ -6687,6 +7020,7 @@
                     "SEND_LEGAL_WELCOME",
                     "SEND_MESSAGE",
                     "SEND_CONVERSATIONAL_MESSAGE",
+                    "SEND_PAYMENT_MESSAGE",
                     "TRIGGER",
                     "TWO_WAY_MESSAGE",
                     "VARIANT"
@@ -6806,7 +7140,8 @@
             "enum": [
               "PERSONALIZATION",
               "COUPONS",
-              "CONCIERGE"
+              "CONCIERGE",
+              "PAYMENTS"
             ]
           },
           "couponMacro": {
@@ -6997,7 +7332,8 @@
               "BACK_IN_STOCK",
               "LOW_INVENTORY",
               "PRICE_DROP",
-              "JOINED_A_SEGMENT"
+              "JOINED_A_SEGMENT",
+              "PAGE_VIEW"
             ],
             "example": "PRODUCT_VIEW"
           },
@@ -7035,6 +7371,9 @@
               "MORE_THAN_ONE_SEND_MESSAGE_NODE",
               "MORE_THAN_ONE_SEND_CONVERSATIONAL_MESSAGE_NODE",
               "SEND_EMAIL_NODE_IS_MISSING_TEMPLATE",
+              "SEND_EMAIL_NODE_FROM_ADDRESS_UNVERIFIED",
+              "SEND_PAYMENT_MESSAGE_NODE_MISSING_PAYMENT_OFFER",
+              "SEND_PAYMENT_MESSAGE_NODE_MISSING_TTB_KEYWORD",
               "BRANCHING_ROOT_NODE_HAS_EMPTY_DIMENSION",
               "BRANCHING_EXPRESSION_PARAMETER_HAS_INVALID_SEGMENT",
               "TRIGGER_NODE_HAS_INVALID_SEGMENT",
@@ -7063,6 +7402,9 @@
               "MORE_THAN_ONE_SEND_MESSAGE_NODE",
               "MORE_THAN_ONE_SEND_CONVERSATIONAL_MESSAGE_NODE",
               "SEND_EMAIL_NODE_IS_MISSING_TEMPLATE",
+              "SEND_EMAIL_NODE_FROM_ADDRESS_UNVERIFIED",
+              "SEND_PAYMENT_MESSAGE_NODE_MISSING_PAYMENT_OFFER",
+              "SEND_PAYMENT_MESSAGE_NODE_MISSING_TTB_KEYWORD",
               "BRANCHING_ROOT_NODE_HAS_EMPTY_DIMENSION",
               "BRANCHING_EXPRESSION_PARAMETER_HAS_INVALID_SEGMENT",
               "TRIGGER_NODE_HAS_INVALID_SEGMENT",
@@ -7112,6 +7454,7 @@
                 "SEND_LEGAL_WELCOME",
                 "SEND_MESSAGE",
                 "SEND_CONVERSATIONAL_MESSAGE",
+                "SEND_PAYMENT_MESSAGE",
                 "TRIGGER",
                 "TWO_WAY_MESSAGE",
                 "VARIANT"
@@ -7145,6 +7488,7 @@
                 "SEND_LEGAL_WELCOME",
                 "SEND_MESSAGE",
                 "SEND_CONVERSATIONAL_MESSAGE",
+                "SEND_PAYMENT_MESSAGE",
                 "TRIGGER",
                 "TWO_WAY_MESSAGE",
                 "VARIANT"
@@ -7175,6 +7519,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/SendMessageNodeOptionsDto"
+                },
+                {
+                  "$ref": "#/components/schemas/SendPaymentMessageNodeOptionsDto"
                 },
                 {
                   "$ref": "#/components/schemas/TriggerNodeOptionsDto"
@@ -7212,6 +7559,7 @@
                 "SEND_LEGAL_WELCOME",
                 "SEND_MESSAGE",
                 "SEND_CONVERSATIONAL_MESSAGE",
+                "SEND_PAYMENT_MESSAGE",
                 "TRIGGER",
                 "TWO_WAY_MESSAGE",
                 "VARIANT"
@@ -7239,7 +7587,8 @@
               "BACK_IN_STOCK",
               "LOW_INVENTORY",
               "PRICE_DROP",
-              "JOINED_A_SEGMENT"
+              "JOINED_A_SEGMENT",
+              "PAGE_VIEW"
             ]
           }
         }
@@ -7601,6 +7950,9 @@
                 "$ref": "#/components/schemas/SendMessageNodeParametersDto"
               },
               {
+                "$ref": "#/components/schemas/SendPaymentMessageNodeParametersDto"
+              },
+              {
                 "$ref": "#/components/schemas/TriggerNodeParametersDto"
               },
               {
@@ -7634,6 +7986,7 @@
               "SEND_LEGAL_WELCOME",
               "SEND_MESSAGE",
               "SEND_CONVERSATIONAL_MESSAGE",
+              "SEND_PAYMENT_MESSAGE",
               "TRIGGER",
               "TWO_WAY_MESSAGE",
               "VARIANT"
@@ -7664,6 +8017,7 @@
                 "SEND_LEGAL_WELCOME",
                 "SEND_MESSAGE",
                 "SEND_CONVERSATIONAL_MESSAGE",
+                "SEND_PAYMENT_MESSAGE",
                 "TRIGGER",
                 "TWO_WAY_MESSAGE",
                 "VARIANT"
@@ -7742,6 +8096,9 @@
           },
           {
             "$ref": "#/components/schemas/SendMessageNodeParametersDto"
+          },
+          {
+            "$ref": "#/components/schemas/SendPaymentMessageNodeParametersDto"
           },
           {
             "$ref": "#/components/schemas/TriggerNodeParametersDto"
@@ -7854,6 +8211,42 @@
           }
         ]
       },
+      "PaymentOfferAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "entityToken": {
+            "type": "string"
+          },
+          "paymentOfferId": {
+            "type": "string"
+          }
+        }
+      },
+      "PaymentOfferOptionsDto": {
+        "type": "object",
+        "properties": {
+          "availableUnits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PERCENT",
+                "DOLLAR"
+              ]
+            }
+          },
+          "reservedKeywords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReservedKeywordDto"
+            }
+          }
+        }
+      },
       "ProductAttributeDataDto": {
         "type": "object",
         "properties": {
@@ -7909,17 +8302,6 @@
           }
         }
       },
-      "RecommendationAttachmentPropertiesDto": {
-        "type": "object",
-        "properties": {
-          "entityToken": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "entityToken"
-        ]
-      },
       "ReplyKeywordDto": {
         "type": "object",
         "properties": {
@@ -7951,6 +8333,26 @@
           },
           "type": {
             "type": "string"
+          }
+        }
+      },
+      "RevisionConversationalStatDto": {
+        "type": "object",
+        "properties": {
+          "clicks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "conversations": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "conversions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revenue": {
+            "type": "number"
           }
         }
       },
@@ -8082,15 +8484,14 @@
         "type": "object",
         "properties": {
           "publishedEndTime": {
-            "type": "integer",
-            "format": "int64",
+            "type": "string",
+            "format": "date-time",
             "description": "timestamp of when the revision became inactive"
           },
           "publishedStartTime": {
-            "type": "integer",
-            "format": "int64",
-            "description": "timestamp of when the revision became active",
-            "example": 1602513731
+            "type": "string",
+            "format": "date-time",
+            "description": "timestamp of when the revision became active"
           },
           "revisionId": {
             "type": "integer",
@@ -8111,6 +8512,9 @@
             "type": "integer",
             "format": "int64",
             "example": 0
+          },
+          "conversationalStats": {
+            "$ref": "#/components/schemas/RevisionConversationalStatDto"
           },
           "conversions": {
             "type": "integer",
@@ -8485,12 +8889,6 @@
               "attachedCoupon": {
                 "$ref": "#/components/schemas/AttachedCouponDto"
               },
-              "attachments": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/AttachmentDto"
-                }
-              },
               "couponPoolId": {
                 "type": "integer",
                 "format": "int64"
@@ -8829,6 +9227,81 @@
           }
         ]
       },
+      "SendPaymentMessageNodeOptionsDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DynamicNodeOptions"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "availableAttachmentMap": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/AvailableAttachmentDto"
+                }
+              },
+              "availableMacros": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/JourneyMacroDto"
+                }
+              },
+              "canToggleRespectBusinessHours": {
+                "type": "boolean"
+              },
+              "canToggleSmartSending": {
+                "type": "boolean"
+              },
+              "paymentOfferDto": {
+                "$ref": "#/components/schemas/PaymentOfferOptionsDto"
+              }
+            }
+          }
+        ]
+      },
+      "SendPaymentMessageNodeParametersDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NodeParametersDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ignoreFatigue": {
+                "type": "boolean"
+              },
+              "macroQueryParameters": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "message": {
+                "$ref": "#/components/schemas/ComposeMessageDto"
+              },
+              "messageGqlId": {
+                "type": "string"
+              },
+              "messageId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "paymentOfferAttachmentDto": {
+                "$ref": "#/components/schemas/PaymentOfferAttachmentDto"
+              },
+              "respectBusinessHours": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
       "ShortLinkDto": {
         "type": "object",
         "allOf": [
@@ -9025,37 +9498,6 @@
           }
         }
       },
-      "TimeConditionDto": {
-        "type": "object",
-        "properties": {
-          "comparator": {
-            "type": "string",
-            "enum": [
-              "TIME_COMPARATOR_UNKNOWN",
-              "TIME_COMPARATOR_BEFORE",
-              "TIME_COMPARATOR_AFTER",
-              "TIME_COMPARATOR_WITHIN",
-              "TIME_COMPARATOR_DAY_OF",
-              "TIME_COMPARATOR_BETWEEN",
-              "TIME_COMPARATOR_OVER_ALL_TIME",
-              "UNRECOGNIZED"
-            ]
-          },
-          "endTime": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "time": {
-            "type": "integer",
-            "format": "int64"
-          }
-        },
-        "required": [
-          "comparator",
-          "endTime",
-          "time"
-        ]
-      },
       "TimeSelectionProperties": {
         "type": "object",
         "allOf": [
@@ -9163,7 +9605,8 @@
               "BACK_IN_STOCK",
               "LOW_INVENTORY",
               "PRICE_DROP",
-              "JOINED_A_SEGMENT"
+              "JOINED_A_SEGMENT",
+              "PAGE_VIEW"
             ]
           }
         }
@@ -9292,7 +9735,8 @@
                   "BACK_IN_STOCK",
                   "LOW_INVENTORY",
                   "PRICE_DROP",
-                  "JOINED_A_SEGMENT"
+                  "JOINED_A_SEGMENT",
+                  "PAGE_VIEW"
                 ]
               }
             }
@@ -9543,6 +9987,9 @@
                 "$ref": "#/components/schemas/SendMessageNodeParametersDto"
               },
               {
+                "$ref": "#/components/schemas/SendPaymentMessageNodeParametersDto"
+              },
+              {
                 "$ref": "#/components/schemas/TriggerNodeParametersDto"
               },
               {
@@ -9576,6 +10023,7 @@
               "SEND_LEGAL_WELCOME",
               "SEND_MESSAGE",
               "SEND_CONVERSATIONAL_MESSAGE",
+              "SEND_PAYMENT_MESSAGE",
               "TRIGGER",
               "TWO_WAY_MESSAGE",
               "VARIANT"
@@ -9723,6 +10171,7 @@
               "SEND_LEGAL_WELCOME",
               "SEND_MESSAGE",
               "SEND_CONVERSATIONAL_MESSAGE",
+              "SEND_PAYMENT_MESSAGE",
               "TRIGGER",
               "TWO_WAY_MESSAGE",
               "VARIANT"
@@ -9753,6 +10202,7 @@
                 "SEND_LEGAL_WELCOME",
                 "SEND_MESSAGE",
                 "SEND_CONVERSATIONAL_MESSAGE",
+                "SEND_PAYMENT_MESSAGE",
                 "TRIGGER",
                 "TWO_WAY_MESSAGE",
                 "VARIANT"
@@ -11726,6 +12176,9 @@
               "courier_redirect_link": {
                 "type": "string"
               },
+              "pickup_location": {
+                "type": "string"
+              },
               "checkpoints": {
                 "type": "array",
                 "description": "List of checkpoints",
@@ -12298,34 +12751,13 @@
               "VIDEO_LINK",
               "IMAGE_GIF",
               "MACRO_TEXT",
-              "MACRO_LINK",
-              "BUBBLEPAY_OFFER"
+              "MACRO_LINK"
             ]
           }
         },
         "discriminator": {
           "propertyName": "type"
         }
-      },
-      "BubblePayOfferAttachmentDto": {
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AbstractAttachmentDto"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "messageBubblePayOfferId": {
-                "type": "integer",
-                "format": "int64"
-              },
-              "bubblePayOfferId": {
-                "type": "string"
-              }
-            }
-          }
-        ]
       },
       "CampaignDto": {
         "type": "object",
@@ -12445,6 +12877,9 @@
             "items": {
               "$ref": "#/components/schemas/TagDto"
             }
+          },
+          "composeCampaignUuid": {
+            "type": "string"
           }
         }
       },
@@ -12652,8 +13087,7 @@
               "VIDEO_LINK",
               "IMAGE_GIF",
               "MACRO_TEXT",
-              "MACRO_LINK",
-              "BUBBLEPAY_OFFER"
+              "MACRO_LINK"
             ]
           }
         }
@@ -12710,9 +13144,6 @@
             "type": "array",
             "items": {
               "oneOf": [
-                {
-                  "$ref": "#/components/schemas/BubblePayOfferAttachmentDto"
-                },
                 {
                   "$ref": "#/components/schemas/ContactCardAttachmentDto1"
                 },
@@ -13311,29 +13742,6 @@
           "emailRateLimit": {
             "type": "number",
             "format": "double"
-          }
-        }
-      },
-      "SchedulerAwsRegion": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "weight": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ZookeeperCampaignSchedulerMetadataDto": {
-        "type": "object",
-        "properties": {
-          "schedulerAwsRegions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SchedulerAwsRegion"
-            }
           }
         }
       },
@@ -14894,8 +15302,7 @@
                 "VIDEO_LINK",
                 "IMAGE_GIF",
                 "CONTACT_CARD",
-                "TRIGGER_PRODUCT_IMAGE",
-                "BUBBLEPAY_OFFER"
+                "TRIGGER_PRODUCT_IMAGE"
               ]
             }
           }
@@ -15509,6 +15916,75 @@
           }
         }
       },
+      "RetryFailedRequest": {
+        "type": "object",
+        "required": [
+          "created_at_start",
+          "created_at_end"
+        ],
+        "properties": {
+          "created_at_start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "start time for the query in utc"
+          },
+          "created_at_end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "end time of the query in utc"
+          },
+          "dry_run": {
+            "type": "boolean",
+            "description": "defaults to true. If true, will not actually re-send messages"
+          },
+          "channel": {
+            "type": "string",
+            "description": "valid values are SMS and MMS. If no value or an invalid value is passed, will retry both"
+          },
+          "providers": {
+            "type": "array",
+            "description": "providers whose messages to retry. Must not be empty",
+            "items": {
+              "type": "string"
+            }
+          },
+          "error_codes": {
+            "type": "array",
+            "description": "optional list of error codes to retry. If empty, all error codes will be retried. For a list of error codes, see the MOPS error code glossary at https://docs.google.com/spreadsheets/d/1F38Z5nE-2Dja9fAJGKvmFH61PoWUz3JwwedmZCgkddY",
+            "items": {
+              "type": "string"
+            }
+          },
+          "statuses": {
+            "type": "array",
+            "description": "optional list of statuses to retry. If empty, will default to [FAILED]",
+            "items": {
+              "type": "string"
+            }
+          },
+          "carriers": {
+            "type": "array",
+            "description": "carriers to retry sends for. If empty, will retry all carriers",
+            "items": {
+              "type": "string"
+            }
+          },
+          "company_ids": {
+            "type": "array",
+            "description": "companies to retry sends for. If empty, will retry sends for all companies",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "message_ids": {
+            "type": "array",
+            "description": "if populated, will retry only messages with message IDs in the list. If empty, will retry messages with any message ID.",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
       "CompanyPhoneNumberRequestDto": {
         "type": "object",
         "properties": {
@@ -15631,6 +16107,25 @@
           "phoneNumberApplicationSubmittedDate": {
             "type": "string",
             "format": "date"
+          },
+          "phoneNumberApplicationCancellationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "assignedCompanies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "companyId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "companyName": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -15734,6 +16229,21 @@
           },
           "phoneNumberUpdatedStatusMessage": {
             "type": "string"
+          },
+          "assignedCompanies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "companyId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "companyName": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -15894,9 +16404,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Id of the privacy request."
+            "type": "string",
+            "description": "ID of the privacy request."
           },
           "processed": {
             "type": "boolean",
@@ -16011,6 +16520,7 @@
       },
       "ExternalIdentifiers": {
         "type": "object",
+        "description": "Please review the [Identity API notes](https://docs.attentivemobile.com/openapi/reference/tag/Identity/) before sending externalIdentifiers.",
         "properties": {
           "clientUserId": {
             "type": "string",
@@ -16111,6 +16621,16 @@
           }
         }
       },
+      "DetailedBadRequest": {
+        "description": "Bad Request. Invalid parameter in request query or body. The following scenarios will cause a 400 response: \nA) Including distributionStart and distributionStop dates that overlap with the distributionStart and distributionStop dates from a previous call, \nB) Including distributionStart and distributionStop dates in an offer that has a distribution window of “Never expire” or “Time to live”, \nC) Excluding distributionStart and distributionStop dates in an offer that has a distribution window of “Custom time period”, D) Including a distributionStart value that is after the distributionStop value\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseDto"
+            }
+          }
+        }
+      },
       "AccessDenied2": {
         "description": "Access Denied",
         "content": {
@@ -16146,6 +16666,9 @@
       },
       "Unauthorized": {
         "description": "Unauthorized"
+      },
+      "TooManyRequests": {
+        "description": "The user has sent too many requests in a given amount of time"
       }
     },
     "requestBodies": {
