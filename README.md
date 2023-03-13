@@ -25,3 +25,10 @@ If Swagger attempted to send the API requests directly from the browser to the A
 - The Sagger UI static HTML/JS/CSS files and the Attentive OpenAPI Spec (`attentive.json`) are stored in the root `/public` folder. These files are rendered in the browser when visiting the root directory.
 - When a user interacts with the Swagger doc, the API requests are sent to the proxy server running at its root.
 - The proxy server reroutes the requests to the Attentive API server (`https://api.attentivemobile.com/v1/...`) and returns the responses to Swagger
+
+## How to run the dev server locally or deploy to heroku
+
+- Clone the [repo](https://github.com/johnchaffee/attentive-swagger-proxy) via: `gh repo clone johnchaffee/attentive-swagger-proxy`
+- From the root directory, run `npm install` to install dependencies
+- Run `npm start` to run locally on http://localhost:3000
+- Deploy to heroku via `git push heroku main`
