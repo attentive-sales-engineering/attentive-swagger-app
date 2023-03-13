@@ -28,7 +28,7 @@ If Swagger attempted to send the API requests directly from the browser to the A
 
 ## How to run the dev server locally or deploy to heroku
 
-- Clone the [repo](https://github.com/johnchaffee/attentive-swagger-proxy) via: `gh repo clone johnchaffee/attentive-swagger-proxy`
+- Clone the [repo](https://github.com/attentive-sales-engineering/attentive-swagger-proxy) via: `gh repo clone attentive-sales-engineering/attentive-swagger-proxy`
 - From the root directory, run `npm install` to install dependencies
 - Run `npm start` to run locally on http://localhost:3000
 - Deploy to heroku via `git push heroku main`
