@@ -4,7 +4,8 @@
   "description": "This project renders the Attentive Open API Specs in Swagger UI and routes API requests though a proxy.",
   "main": "index.js",
   "scripts": {
-    "start": "node --env-file=.env index.js"
+    "start": "node index.js",
+    "dev": "node --env-file=.env --watch index.js"
   },
   "keywords": [],
   "author": "John Chaffee",
