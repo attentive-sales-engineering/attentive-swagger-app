@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
@@ -71,7 +70,7 @@ app.use(/.*/, (req, res, next) => {
 })
 
 // Function to inspect and log API requests in console for debugging
-function logger (req) {
+function logger(req) {
   console.log('REQ.PROTOCOL:', req.protocol)
   console.log('REQ.HOSTNAME:', req.hostname)
   console.log('REQ.METHOD:', req.method)
