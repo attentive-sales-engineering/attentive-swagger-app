@@ -1119,7 +1119,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "Private applications can authenticate through basic HTTP authentication by using their API key as the [Bearer Token](https://oauth.net/2/bearer-tokens/) when making calls to Attentive’s APIs. To generate a unique API key, you must [create an app in the Attentive platform](https://ui.attentivemobile.com/integrations/custom-app/management). Use the `GET /me` endpoint to verify that you are authenticating correctly.",
+        "description": "Private applications can authenticate through basic HTTP authentication by using their API key as the [Bearer Token](https://oauth.net/2/bearer-tokens/) when making calls to Attentive’s APIs. To generate a unique API key, you must [create an app in the Attentive platform](https://ui.attentivemobile.com/integrations/custom-app/management). Use the `GET /me` endpoint to verify that you are authenticating correctly."
       }
     },
     "schemas": {
