@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "description": "For any questions, contact us at [api@attentivemobile.com](mailto:api@attentivemobile.com).\n\n# Authentication\n\nTo keep data on Attentive's platform safe and secure, all apps connecting with Attentive's APIs must authenticate when making API requests. Different types of apps require different authentication or authorization methods:\n\n* Private apps use basic HTTP authentication.\n* Public apps use OAuth 2.0.\n\nThis Open API Spec is configured to use basic HTTP authentication by using an API key as the Bearer Token. Click the Authorize button and enter your Bearer Token to authenticate. See [Authentication](https://docs.attentivemobile.com/pages/authentication/) for more info.\n\ntest",
+    "description": "For any questions, contact us at [api@attentivemobile.com](mailto:api@attentivemobile.com).\n\n# Authentication\n\nTo keep data on Attentive's platform safe and secure, all apps connecting with Attentive's APIs must authenticate when making API requests. Different types of apps require different authentication or authorization methods:\n\n* Private apps use basic HTTP authentication.\n* Public apps use OAuth 2.0.\n\nThis Open API Spec is configured to use basic HTTP authentication by using an API key as the Bearer Token. Click the Authorize button and enter your Bearer Token to authenticate. See [Authentication](https://docs.attentivemobile.com/pages/authentication/) for more info.",
     "title": "Attentive API",
     "version": ""
   },
